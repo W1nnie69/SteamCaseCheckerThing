@@ -95,7 +95,8 @@ class Scraper:
 
             for i in currency_float:
                 result = i * exchange_rate
-                rounded_result = round(result, 2)
+                after_steam_tax = (result / 115) * 100
+                rounded_result = round(after_steam_tax, 2)
                 self.converted_currency.append(rounded_result)
             
 

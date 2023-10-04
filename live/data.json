@@ -1,26 +1,26 @@
 {
     "name": [
         "Dreams & Nightmares Case",
-        "Fracture Case",
         "Revolution Case",
-        "Glove Case",
-        "Operation Breakout Weapon Case",
+        "Fracture Case",
         "Recoil Case",
+        "Snakebite Case",
+        "Mann Co. Supply Crate Key",
+        "Operation Breakout Weapon Case",
         "Danger Zone Case",
         "Prisma 2 Case",
-        "Snakebite Case",
-        "Spectrum 2 Case"
+        "Glove Case"
     ],
     "price": [
-        2.27,
-        0.94,
-        1.9,
-        7.46,
-        9.53,
-        0.81,
-        1.29,
-        1.35,
-        0.51,
-        2.93
+        1.72,
+        1.58,
+        0.77,
+        0.64,
+        0.43,
+        2.72,
+        8.31,
+        1.11,
+        1.14,
+        6.46
     ]
 }
