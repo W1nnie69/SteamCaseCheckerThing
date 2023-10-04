@@ -5,22 +5,34 @@
         "Fracture Case",
         "Recoil Case",
         "Snakebite Case",
+        "Glove Case",
         "Mann Co. Supply Crate Key",
-        "Operation Breakout Weapon Case",
         "Danger Zone Case",
-        "Prisma 2 Case",
-        "Glove Case"
+        "Operation Breakout Weapon Case",
+        "Prisma 2 Case"
     ],
-    "price": [
-        1.72,
-        1.58,
-        0.77,
+    "TRY": [
+        33.61,
+        30.79,
+        16.22,
+        12.93,
+        8.7,
+        129.04,
+        55.0,
+        19.98,
+        169.46,
+        23.03
+    ],
+    "SGD": [
+        1.67,
+        1.53,
+        0.81,
         0.64,
         0.43,
-        2.72,
-        8.31,
-        1.11,
-        1.14,
-        6.46
+        6.42,
+        2.74,
+        0.99,
+        8.44,
+        1.15
     ]
 }
