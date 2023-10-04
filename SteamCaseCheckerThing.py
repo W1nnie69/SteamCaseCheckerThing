@@ -80,13 +80,11 @@ class Scraper:
         driver.quit()
                 
                 
-        # print(self.prices)
+        
+
 
     def usd_to_sgd(self):
-            self.converted_currency = []
-
-    
-            # amount = ['$1.70', '$0.73', '$1.44', '$0.63', '$0.89', '$2.32', '$0.97', '$0.37', '$5.38', '$7.13']
+            self.converted_to_SGD = []
 
             c = CurrencyRates()
             exchange_rate = c.get_rate('USD', 'SGD')
@@ -97,18 +95,33 @@ class Scraper:
                 result = i * exchange_rate
                 after_steam_tax = (result / 115) * 100
                 rounded_result = round(after_steam_tax, 2)
-                self.converted_currency.append(rounded_result)
+                self.converted_to_SGD.append(rounded_result)
             
 
             
+    def usd_to_try(self):
+        self.converted_to_TRY = []
+
+        c = CurrencyRates()
+        exchange_rate = c.get_rate('USD', 'TRY')
+
+        currency_float = [float(value[1:]) for value in self.prices]
+
+        for i in currency_float:
+                result = i * exchange_rate
+                after_steam_tax = (result / 115) * 100
+                rounded_result = round(after_steam_tax, 2)
+                self.converted_to_TRY.append(rounded_result)
 
 
+
+                
 
 
     def save_title_and_price(self):
         json_file_path = 'data.json'
 
-        data = {'name': self.titles, 'price': self.converted_currency}
+        data = {'name': self.titles, 'TRY':self.converted_to_TRY, 'SGD': self.converted_to_SGD}
 
         with open(json_file_path, 'w') as json_file:
             json.dump(data, json_file, indent=4)   
@@ -147,6 +160,8 @@ class Scraper:
 
                 self.usd_to_sgd()
 
+                self.usd_to_try()
+
                 self.save_title_and_price()
 
                 print("OK Web scraping completed")
@@ -159,16 +174,16 @@ class Scraper:
                 c = CurrencyRates()
                 
                 print("Enter the price of the game in lira")   
-                loop = True
+                loop2 = True
                 
-                while loop is True:
+                while loop2 is True:
                     self.game_price_in_lira = int(input(": "))
 
                     if self.game_price_in_lira < 1:
                         print("Invalid option buddy, read again")
 
                     else:
-                        loop = False
+                        loop2 = False
 
 
                 exchange_rate2 = c.get_rate('TRY', 'SGD')
@@ -176,24 +191,44 @@ class Scraper:
                 self.game_price_converted_to_SGD = round(result2, 2)
         
 
-        self.Calcu_quant_cases_to_price()
+                self.Calcu_quant_cases_to_price()
 
-        data = self.open_load_json()
-        loaded_price = data['price']
-        loaded_titles = data['name']
+                data = self.open_load_json()
+                loaded_price_SGD = data['SGD']
+                loaded_price_TRY = data['TRY']
+                loaded_titles = data['name']
+            
+                values_with_SGD = ['SGD {}'.format(value) for value in loaded_price_SGD]
+                values_with_TRY = ['TRY {}'.format(value) for value in loaded_price_TRY]
 
-        values_with_SGD = ['SGD {}'.format(value) for value in loaded_price]
+                zipped_data = zip(loaded_titles, values_with_SGD, values_with_TRY, self.quant_of_cases)
 
-        zipped_data = zip(loaded_titles, values_with_SGD, self.quant_of_cases)
-
+                        
+                print("Price of game converted to SGD: ", self.game_price_converted_to_SGD)
+                print("")
+                print("Case                           ", "Price of case*    ", " Amt to put in 'buyer pays'     ","Quantity of cases needed to match price of game")
+                for row in zipped_data:
+                    print("{:<33} {:<24} {:<42} {:<0}".format(*row))
                 
-        print("Price of game converted to SGD: ", self.game_price_converted_to_SGD)
-        print("")
-        print("Case                           ", "Price of case    ", "Quantity of cases need to match price of game")
-        for row in zipped_data:
-            print("{:<32} {:<18} {:<20}".format(*row))
-        
-        input("Press Enter to Close")
+
+                theend = True
+                
+                while theend == True:
+                    isalive = input("Press Enter to restart, type 'quit' to close ")
+
+                    if isalive == "quit":
+                        theend = False
+                        loop = False
+                        loop2 = False
+                        quit()
+
+                    elif isalive == "":
+                        theend = False
+                        print("")
+                        
+
+                    else:
+                        print("Unknown command")
 
 
 
@@ -202,11 +237,11 @@ class Scraper:
         self.quant_of_cases = []
         
         data =  self.open_load_json()
-        loaded_price = data['price']
+        loaded_price_SGD = data['SGD']
 
-        for i in loaded_price:
+        for i in loaded_price_SGD:
             quant = self.game_price_converted_to_SGD / i
-            r_quant = round(quant, 1)  
+            r_quant = round(quant, 1)
             self.quant_of_cases.append(r_quant)
 
 
